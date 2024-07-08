@@ -15,7 +15,7 @@ async function checkSchemeId(req, res, next) {
     next();
   } else {
     res.status(404).json({
-      message: `Scheme with scheme_id ${scheme_id} not found`
+      message: `scheme with scheme_id ${scheme_id} not found`
     });
   }
 }
@@ -50,9 +50,12 @@ function validateScheme(req, res, next) {
 */
 function validateStep(req, res, next) {
   const { step_number, instructions } = req.body;
-  if (step_number == null
-    || !instructions
-    || typeof instructions !== 'string') {
+  if (
+    step_number == null ||
+    typeof step_number !== 'number' ||
+    step_number < 1 ||
+    !instructions ||
+    typeof instructions !== 'string') {
     res.status(400).json({
       message: 'invalid step'
     });
